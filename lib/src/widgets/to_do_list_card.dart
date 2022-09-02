@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/models/task.dart';
+import 'package:to_do_list/to_do_list.dart';
 
 class ToDoListCardTheme {
   ToDoListCardTheme({
@@ -18,6 +18,7 @@ class ToDoListCardTheme {
   Color? cardColor;
 }
 
+/// Card shown in carousel of [ToDoList]
 class ToDoListCard extends StatelessWidget {
   const ToDoListCard({required this.task, this.theme, Key? key})
       : super(key: key);

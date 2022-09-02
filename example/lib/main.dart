@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/models/task.dart';
 import 'package:to_do_list/to_do_list.dart';
-import 'package:to_do_list/to_do_list_detail.dart';
-import 'package:to_do_list/widgets/to_do_list_card.dart';
 
 void main() {
   runApp(const MaterialApp(home: ToDoListExampleApp()));
@@ -150,38 +147,7 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
                     MaterialPageRoute(
                       builder: (context) {
                         var task = tasks[index % tasks.length];
-                        return Scaffold(
-                          body: SafeArea(
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 50, left: 20, right: 20),
-                                  child: ToDoListDetail(
-                                    task: task,
-                                    avatarBuilder: (context, user) {
-                                      const colors = [
-                                        Colors.red,
-                                        Colors.green,
-                                        Colors.blue
-                                      ];
-                                      return CircleAvatar(
-                                        backgroundColor: colors[user - 1],
-                                        radius: 12,
-                                        child: Text(
-                                          user.toString(),
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const BackButton(),
-                              ],
-                            ),
-                          ),
-                        );
+                        return ToDoListDetailExample(task: task);
                       },
                     ),
                   );
@@ -199,6 +165,63 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ToDoListDetailExample extends StatefulWidget {
+  const ToDoListDetailExample({super.key, required this.task});
+
+  final Task task;
+
+  @override
+  State<ToDoListDetailExample> createState() => _ToDoListDetailExampleState();
+}
+
+class _ToDoListDetailExampleState extends State<ToDoListDetailExample> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+              child: ToDoListDetail(
+                onJoinUser: (task) {
+                  if (!task.users.contains(1)) {
+                    setState(() {
+                      task.users.add(1);
+                    });
+                  } else {
+                    setState(() {
+                      task.users.remove(1);
+                    });
+                  }
+                },
+                onCheck: (task, value) {
+                  setState(() {
+                    task.isDone = value;
+                  });
+                },
+                task: widget.task,
+                avatarBuilder: (context, user) {
+                  const colors = [Colors.red, Colors.green, Colors.blue];
+                  return CircleAvatar(
+                    backgroundColor: colors[user - 1],
+                    radius: 12,
+                    child: Text(
+                      user.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const BackButton(),
+          ],
         ),
       ),
     );

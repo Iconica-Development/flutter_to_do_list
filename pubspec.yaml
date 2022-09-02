@@ -11,8 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   carousel: 
-    path: ../carousel/
-
+    git:
+      url: https://github.com/Iconica-Development/carousel.git
+      ref: v-0.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

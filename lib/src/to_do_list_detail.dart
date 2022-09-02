@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:to_do_list/models/task.dart';
+import 'package:to_do_list/to_do_list.dart';
 
 class ToDoListDetailTheme {
   TextStyle? bodyStyle;
@@ -13,19 +13,29 @@ class ToDoListDetailTheme {
   Color? checkBoxSplashColor;
 }
 
+/// Detail view for [ToDoList]
 class ToDoListDetail extends StatefulWidget {
   const ToDoListDetail({
     required this.task,
     this.avatarBuilder,
     this.onCheck,
+    this.onJoinUser,
     this.theme,
     Key? key,
   }) : super(key: key);
 
   final Task task;
   final ToDoListDetailTheme? theme;
-  final ValueChanged<bool?>? onCheck;
+
+  /// Called when task is checked
+  final void Function(Task task, bool value)? onCheck;
+
+  /// Avatar builder callback is called with a dynamic user
+  /// to display the associated avatar
   final Widget Function(BuildContext context, dynamic user)? avatarBuilder;
+
+  /// Called when user wants to join task
+  final void Function(Task task)? onJoinUser;
 
   @override
   State<ToDoListDetail> createState() => _ToDoListDetailState();
@@ -119,14 +129,18 @@ class _ToDoListDetailState extends State<ToDoListDetail> {
                     overlayColor: MaterialStateProperty.all(
                         widget.theme?.checkBoxSplashColor),
                     value: subsubtask.isDone,
-                    onChanged: widget.onCheck ??
-                        (value) {
-                          setState(() {
-                            subsubtask.isDone = value ?? false;
-                          });
-                        },
+                    onChanged: (value) =>
+                        widget.onCheck?.call(subsubtask, value ?? false),
                   ),
-                  Text(subsubtask.name, style: bodyStyle),
+                  GestureDetector(
+                    onTap: () {
+                      widget.onJoinUser?.call(subsubtask);
+                    },
+                    child: Text(
+                      subsubtask.name,
+                      style: bodyStyle,
+                    ),
+                  ),
                   if (widget.avatarBuilder != null &&
                       subsubtask.users.isNotEmpty) ...[
                     Padding(

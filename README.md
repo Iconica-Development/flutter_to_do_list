@@ -3,9 +3,11 @@ To do list component consisting of a horizontal list of cards and a detailpage.
 Each card shows the tasks and the completed percentage.
 Subtasks are visible on the detail page where they can be toggled.
 
-This component depends on the carousel component.
+This component depends on the [carousel component](https://github.com/Iconica-Development/carousel).
 
 Supports all platforms.
+
+![demo video](demo.gif)
 
 ## Usage
 
@@ -23,6 +25,6 @@ Please file any issues, bugs or feature request as an issue on our [GitHub](http
 
 If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our [contribution guide](./CONTRIBUTING.md) and send us your [pull request](https://github.com/Iconica-Development/to_do_list/pulls).
 
-## Author`
+## Author
 
 This to do list for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>

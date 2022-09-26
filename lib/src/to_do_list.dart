@@ -1,5 +1,4 @@
 import 'package:carousel/carousel.dart';
-import 'package:carousel/models/card_transform.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -27,11 +26,41 @@ class ToDoList extends StatelessWidget {
       selectableCardId: 3,
       onCardClick: onCardClick,
       transforms: [
-        CardTransform(x: 200, y: 15, angle: math.pi / 5, scale: 0.2),
-        CardTransform(x: 200, y: 10, angle: math.pi / 10, scale: 0.4),
-        CardTransform(x: 110, y: -5, angle: math.pi / 20, scale: 0.6),
-        CardTransform(x: 0, y: 0, angle: 0, scale: 1),
-        CardTransform(x: -260, y: 70, angle: -math.pi / 50, scale: 1),
+        CardTransform(
+          x: 200,
+          y: 15,
+          angle: math.pi / 5,
+          scale: 0.2,
+          opacity: 0.5,
+        ),
+        CardTransform(
+          x: 200,
+          y: 10,
+          angle: math.pi / 10,
+          scale: 0.4,
+          opacity: 0.5,
+        ),
+        CardTransform(
+          x: 110,
+          y: -5,
+          angle: math.pi / 20,
+          scale: 0.6,
+          opacity: 0.7,
+        ),
+        CardTransform(
+          x: 0,
+          y: 0,
+          angle: 0,
+          scale: 1,
+          opacity: 1.0,
+        ),
+        CardTransform(
+          x: -260,
+          y: 70,
+          angle: -math.pi / 50,
+          scale: 1,
+          opacity: 0.4,
+        ),
       ],
       builder: (context, index) {
         var task = tasks[index % tasks.length];

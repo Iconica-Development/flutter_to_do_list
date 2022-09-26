@@ -1,7 +1,7 @@
 name: to_do_list
 description: To do list
-version: 0.0.1
-homepage:
+version: 0.0.2
+
 publish_to: none
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -13,7 +13,7 @@ dependencies:
   carousel: 
     git:
       url: https://github.com/Iconica-Development/carousel.git
-      ref: v-0.0.1
+      ref: 0.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

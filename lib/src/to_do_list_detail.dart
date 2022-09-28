@@ -11,6 +11,14 @@ class ToDoListDetailTheme {
   Color? checkBoxBgColor;
   Color? checkBoxCheckColor;
   Color? checkBoxSplashColor;
+  ToDoListDetailTheme(
+      {this.bodyStyle,
+      this.headingStyle,
+      this.percentageIndicatorBackground,
+      this.percentageIndicatorForeground,
+      this.checkBoxBgColor,
+      this.checkBoxCheckColor,
+      this.checkBoxSplashColor});
 }
 
 /// Detail view for [ToDoList]

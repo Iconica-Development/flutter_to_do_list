@@ -1,15 +1,17 @@
 class Task {
   /// A [Task] can be a category with subtasks or a task.
-  Task({
+  const Task({
+    required this.id,
     required this.name,
     this.users = const [],
     this.subtasks = const [],
     this.isDone = false,
   });
-  String name;
-  List<dynamic> users;
-  List<Task> subtasks;
-  bool isDone;
+  final String id;
+  final String name;
+  final List<dynamic> users;
+  final List<Task> subtasks;
+  final bool isDone;
 
   /// Percentage of completed tasks.
   /// Counts the deepest nested tasks of all the subtasks.

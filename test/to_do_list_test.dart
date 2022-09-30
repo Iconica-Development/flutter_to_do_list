@@ -7,14 +7,14 @@ void main() {
       test('4 levels deep', () {
         var expected = 2;
 
-        var actual = Task(name: '', subtasks: [
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: false),
-            Task(name: '', subtasks: [
-              Task(name: '', subtasks: [
-                Task(name: '', isDone: true),
-                Task(name: '', isDone: true),
-                Task(name: '', isDone: false),
+        var actual = const Task(id: '#', name: '', subtasks: [
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', subtasks: [
+              Task(id: '#', name: '', subtasks: [
+                Task(id: '#', name: '', isDone: true),
+                Task(id: '#', name: '', isDone: true),
+                Task(id: '#', name: '', isDone: false),
               ]),
             ]),
           ]),
@@ -25,16 +25,16 @@ void main() {
       test('2 levels deep 2 times', () {
         var expected = 2;
 
-        var actual = Task(name: '', subtasks: [
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: true),
-            Task(name: '', isDone: true),
-            Task(name: '', isDone: true),
+        var actual = const Task(id: '#', name: '', subtasks: [
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: true),
+            Task(id: '#', name: '', isDone: true),
+            Task(id: '#', name: '', isDone: true),
           ]),
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: false),
-            Task(name: '', isDone: false),
-            Task(name: '', isDone: true),
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', isDone: true),
           ]),
         ]).openTasks;
 
@@ -46,14 +46,14 @@ void main() {
       test('4 levels deep', () {
         var expected = 50;
 
-        var actual = Task(name: '', subtasks: [
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: false),
-            Task(name: '', subtasks: [
-              Task(name: '', subtasks: [
-                Task(name: '', isDone: true),
-                Task(name: '', isDone: true),
-                Task(name: '', isDone: false),
+        var actual = const Task(id: '#', name: '', subtasks: [
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', subtasks: [
+              Task(id: '#', name: '', subtasks: [
+                Task(id: '#', name: '', isDone: true),
+                Task(id: '#', name: '', isDone: true),
+                Task(id: '#', name: '', isDone: false),
               ]),
             ]),
           ]),
@@ -64,16 +64,16 @@ void main() {
       test('2 levels deep 2 times', () {
         var expected = 66.66666666666667;
 
-        var actual = Task(name: '', subtasks: [
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: true),
-            Task(name: '', isDone: true),
-            Task(name: '', isDone: true),
+        var actual = const Task(id: '#', name: '', subtasks: [
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: true),
+            Task(id: '#', name: '', isDone: true),
+            Task(id: '#', name: '', isDone: true),
           ]),
-          Task(name: '', subtasks: [
-            Task(name: '', isDone: false),
-            Task(name: '', isDone: false),
-            Task(name: '', isDone: true),
+          Task(id: '#', name: '', subtasks: [
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', isDone: false),
+            Task(id: '#', name: '', isDone: true),
           ]),
         ]).percentageDone;
 

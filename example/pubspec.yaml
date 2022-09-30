@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   to_do_list:
     path: ../
+  uuid: ^3.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

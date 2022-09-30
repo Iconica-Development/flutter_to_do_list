@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:to_do_list/to_do_list.dart';
 
 void main() {
@@ -13,105 +14,170 @@ class ToDoListExampleApp extends StatefulWidget {
 }
 
 class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
-  var tasks = [
+  final uuid = const Uuid();
+  late var tasks = [
     Task(
+      id: uuid.v1(),
       name: 'Vandaag',
       subtasks: [
         Task(
+          id: uuid.v1(),
           name: 'Cleaning',
           subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen', users: [1], isDone: true),
-            Task(name: 'Clean bathroom', users: [1]),
-            Task(name: 'Clean bedroom'),
+            Task(id: uuid.v1(), name: 'Clean living room', users: [2, 1]),
+            Task(
+                id: uuid.v1(), name: 'Clean kitchen', users: [1], isDone: true),
+            Task(id: uuid.v1(), name: 'Clean bathroom', users: [1]),
+            Task(id: uuid.v1(), name: 'Clean bedroom'),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Cooking',
           subtasks: [
-            Task(name: 'Boiling eggs', users: [3], isDone: true),
-            Task(name: 'Baking pancakes', users: [2]),
-            Task(name: 'Making drinks', users: [2, 3], isDone: true),
+            Task(id: uuid.v1(), name: 'Boiling eggs', users: [3], isDone: true),
+            Task(id: uuid.v1(), name: 'Baking pancakes', users: [2]),
+            Task(
+                id: uuid.v1(),
+                name: 'Making drinks',
+                users: [2, 3],
+                isDone: true),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Taking out trash',
           subtasks: [
-            Task(name: 'Unfolding boxes', users: [1, 2], isDone: true),
-            Task(name: 'Taking out cardboard', users: [3], isDone: true)
+            Task(
+                id: uuid.v1(),
+                name: 'Unfolding boxes',
+                users: [1, 2],
+                isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Taking out cardboard',
+                users: [3],
+                isDone: true)
           ],
         ),
       ],
     ),
     Task(
+      id: uuid.v1(),
       name: 'Morgen',
       subtasks: [
         Task(
+          id: uuid.v1(),
           name: 'Cleaning',
           subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen', users: [2]),
-            Task(name: 'Clean bathroom', users: [2]),
-            Task(name: 'Clean bedroom'),
+            Task(id: uuid.v1(), name: 'Clean living room', users: [2, 1]),
+            Task(id: uuid.v1(), name: 'Clean kitchen', users: [2]),
+            Task(id: uuid.v1(), name: 'Clean bathroom', users: [2]),
+            Task(id: uuid.v1(), name: 'Clean bedroom'),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Cooking',
           subtasks: [
-            Task(name: 'Boiling eggs', users: [3]),
-            Task(name: 'Baking pancakes', users: [2], isDone: true),
-            Task(name: 'Making drinks', users: [2, 3], isDone: true),
+            Task(id: uuid.v1(), name: 'Boiling eggs', users: [3]),
+            Task(
+                id: uuid.v1(),
+                name: 'Baking pancakes',
+                users: [2],
+                isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Making drinks',
+                users: [2, 3],
+                isDone: true),
           ],
         ),
       ],
     ),
     Task(
+      id: uuid.v1(),
       name: 'Overmorgen',
       subtasks: [
         Task(
+          id: uuid.v1(),
           name: 'Washing',
           subtasks: [
-            Task(name: 'Washing clothes', users: [3, 2], isDone: true),
-            Task(name: 'Washing towels', users: [3]),
-            Task(name: 'Washing bedsheets', users: [3], isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Washing clothes',
+                users: [3, 2],
+                isDone: true),
+            Task(id: uuid.v1(), name: 'Washing towels', users: [3]),
+            Task(
+                id: uuid.v1(),
+                name: 'Washing bedsheets',
+                users: [3],
+                isDone: true),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Cleaning',
           subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen'),
-            Task(name: 'Clean bathroom', users: [2], isDone: true),
-            Task(name: 'Clean bedroom'),
+            Task(id: uuid.v1(), name: 'Clean living room', users: [2, 1]),
+            Task(id: uuid.v1(), name: 'Clean kitchen'),
+            Task(
+                id: uuid.v1(),
+                name: 'Clean bathroom',
+                users: [2],
+                isDone: true),
+            Task(id: uuid.v1(), name: 'Clean bedroom'),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Cooking',
           subtasks: [
-            Task(name: 'Boiling eggs', users: [1], isDone: true),
-            Task(name: 'Baking pancakes', users: [1], isDone: true),
-            Task(name: 'Making drinks', users: [3], isDone: true),
+            Task(id: uuid.v1(), name: 'Boiling eggs', users: [1], isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Baking pancakes',
+                users: [1],
+                isDone: true),
+            Task(
+                id: uuid.v1(), name: 'Making drinks', users: [3], isDone: true),
           ],
         ),
       ],
     ),
     Task(
+      id: uuid.v1(),
       name: 'Weekend',
       subtasks: [
         Task(
+          id: uuid.v1(),
           name: 'Cooking',
           subtasks: [
-            Task(name: 'Boiling eggs', users: [2], isDone: true),
-            Task(name: 'Baking pancakes', users: [1], isDone: true),
+            Task(id: uuid.v1(), name: 'Boiling eggs', users: [2], isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Baking pancakes',
+                users: [1],
+                isDone: true),
           ],
         ),
         Task(
+          id: uuid.v1(),
           name: 'Cleaning',
           subtasks: [
-            Task(name: 'Clean living room', users: [2, 1], isDone: true),
-            Task(name: 'Clean kitchen', isDone: true),
-            Task(name: 'Clean bathroom', users: [2, 1], isDone: true),
-            Task(name: 'Clean bedroom', isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Clean living room',
+                users: [2, 1],
+                isDone: true),
+            Task(id: uuid.v1(), name: 'Clean kitchen', isDone: true),
+            Task(
+                id: uuid.v1(),
+                name: 'Clean bathroom',
+                users: [2, 1],
+                isDone: true),
+            Task(id: uuid.v1(), name: 'Clean bedroom', isDone: true),
           ],
         ),
       ],
@@ -202,9 +268,13 @@ class _ToDoListDetailExampleState extends State<ToDoListDetailExample> {
                   }
                 },
                 onCheck: (task, value) {
-                  setState(() {
-                    task.isDone = value;
-                  });
+                  return Task(
+                    id: task.id,
+                    name: task.name,
+                    users: task.users,
+                    subtasks: task.subtasks,
+                    isDone: value,
+                  );
                 },
                 task: widget.task,
                 avatarBuilder: (context, user) {

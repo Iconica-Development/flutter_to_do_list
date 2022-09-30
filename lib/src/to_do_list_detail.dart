@@ -28,7 +28,7 @@ class ToDoListDetail extends StatefulWidget {
   final ToDoListDetailTheme? theme;
 
   /// Called when task is checked
-  final void Function(Task task, bool value)? onCheck;
+  final Task Function(Task task, bool value)? onCheck;
 
   /// Avatar builder callback is called with a dynamic user
   /// to display the associated avatar

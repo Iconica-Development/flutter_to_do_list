@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Iconica
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 library to_do_list;
 
 export 'package:to_do_list/src/to_do_list.dart';

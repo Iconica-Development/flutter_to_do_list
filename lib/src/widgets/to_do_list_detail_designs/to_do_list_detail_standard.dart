@@ -7,24 +7,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/to_do_list.dart';
 
-class ToDoListDetailTheme {
-  TextStyle? bodyStyle;
-  TextStyle? headingStyle;
-  Color? percentageIndicatorBackground;
-  Color? percentageIndicatorForeground;
-  Color? checkBoxBgColor;
-  Color? checkBoxCheckColor;
-  Color? checkBoxSplashColor;
-  ToDoListDetailTheme(
-      {this.bodyStyle,
-      this.headingStyle,
-      this.percentageIndicatorBackground,
-      this.percentageIndicatorForeground,
-      this.checkBoxBgColor,
-      this.checkBoxCheckColor,
-      this.checkBoxSplashColor});
-}
-
 /// Detail view for [ToDoList]
 class ToDoListDetail extends StatefulWidget {
   const ToDoListDetail({

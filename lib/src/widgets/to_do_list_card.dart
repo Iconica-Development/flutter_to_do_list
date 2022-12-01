@@ -88,20 +88,21 @@ class ToDoListCard extends StatelessWidget {
               ],
             ),
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              CircularProgressIndicator(
-                value: task.percentageDone / 100,
-                strokeWidth: 3,
-                color: theme?.percentageIndicatorBackground,
-              ),
-              Text(
-                '${task.percentageDone.round()}%',
-                style: percentageText,
-              )
-            ],
-          ),
+          if (task.subtasks.isNotEmpty)
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  value: task.percentageDone / 100,
+                  strokeWidth: 3,
+                  color: theme?.percentageIndicatorBackground,
+                ),
+                Text(
+                  '${task.percentageDone.round()}%',
+                  style: percentageText,
+                )
+              ],
+            ),
         ],
       ),
     );

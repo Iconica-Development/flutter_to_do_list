@@ -40,7 +40,7 @@ class ToDoListDetail extends StatefulWidget {
   final ToDoListDetailTheme? theme;
 
   /// Called when task is checked
-  final void Function(Task task, bool value)? onCheck;
+  final void Function(Task parentTask, Task task, bool value)? onCheck;
 
   /// Avatar builder callback is called with a dynamic user
   /// to display the associated avatar
@@ -141,8 +141,8 @@ class _ToDoListDetailState extends State<ToDoListDetail> {
                     overlayColor: MaterialStateProperty.all(
                         widget.theme?.checkBoxSplashColor),
                     value: subsubtask.isDone,
-                    onChanged: (value) =>
-                        widget.onCheck?.call(subsubtask, value ?? false),
+                    onChanged: (value) => widget.onCheck
+                        ?.call(subtask, subsubtask, value ?? false),
                   ),
                   GestureDetector(
                     onTap: () {

@@ -205,7 +205,7 @@ class _ToDoListDetailExampleState extends State<ToDoListDetailExample> {
                     });
                   }
                 },
-                onCheck: (task, value) {
+                onCheck: (subtask, task, value) {
                   setState(() {
                     task.isDone = value;
                   });

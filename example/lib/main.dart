@@ -24,10 +24,13 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
         Task(
           name: 'Cleaning',
           subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
+            Task(name: 'Clean living room', users: [
+              2,
+              1,
+            ]),
             Task(name: 'Clean kitchen', users: [1], isDone: true),
             Task(name: 'Clean bathroom', users: [1]),
-            Task(name: 'Clean bedroom'),
+            Task(name: 'Clean bedroom', users: []),
           ],
         ),
         Task(
@@ -56,7 +59,7 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
             Task(name: 'Clean living room', users: [2, 1]),
             Task(name: 'Clean kitchen', users: [2]),
             Task(name: 'Clean bathroom', users: [2]),
-            Task(name: 'Clean bedroom'),
+            Task(name: 'Clean bedroom', users: []),
           ],
         ),
         Task(
@@ -84,9 +87,9 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
           name: 'Cleaning',
           subtasks: [
             Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen'),
+            Task(name: 'Clean kitchen', users: []),
             Task(name: 'Clean bathroom', users: [2], isDone: true),
-            Task(name: 'Clean bedroom'),
+            Task(name: 'Clean bedroom', users: []),
           ],
         ),
         Task(
@@ -113,9 +116,9 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
           name: 'Cleaning',
           subtasks: [
             Task(name: 'Clean living room', users: [2, 1], isDone: true),
-            Task(name: 'Clean kitchen', isDone: true),
+            Task(name: 'Clean kitchen', users: [], isDone: true),
             Task(name: 'Clean bathroom', users: [2, 1], isDone: true),
-            Task(name: 'Clean bedroom', isDone: true),
+            Task(name: 'Clean bedroom', users: [], isDone: true),
           ],
         ),
       ],
@@ -185,6 +188,7 @@ class ToDoListDetailExample extends StatefulWidget {
 }
 
 class _ToDoListDetailExampleState extends State<ToDoListDetailExample> {
+  late Task task = widget.task;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,33 +198,112 @@ class _ToDoListDetailExampleState extends State<ToDoListDetailExample> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               child: ToDoListDetail(
-                onJoinUser: (task) {
-                  if (!task.users.contains(1)) {
-                    setState(() {
-                      task.users.add(1);
-                    });
-                  } else {
-                    setState(() {
-                      task.users.remove(1);
-                    });
-                  }
-                },
                 onCheck: (subtask, task, value) {
                   setState(() {
                     task.isDone = value;
                   });
                 },
-                task: widget.task,
-                avatarBuilder: (context, user) {
+                user: 1,
+                task: task,
+                sameUser: (user, user2) => user == user2,
+                avatarBuilder: (context, user, avatarType, parentTask, task) {
                   const colors = [Colors.red, Colors.green, Colors.blue];
-                  return CircleAvatar(
-                    backgroundColor: colors[user - 1],
-                    radius: 12,
-                    child: Text(
-                      user.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  );
+                  switch (avatarType) {
+                    case AvatarType.user:
+                      return CircleAvatar(
+                        backgroundColor: colors[user - 1],
+                        radius: 24,
+                        child: Text(
+                          user.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    case AvatarType.currentUserJoined:
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            this
+                                .task
+                                .subtasks
+                                .firstWhere((subtask) =>
+                                    subtask.name == parentTask.name)
+                                .subtasks
+                                .firstWhere(
+                                    (subtask) => subtask.name == task.name)
+                                .users
+                                .removeWhere((element) => element == user);
+                          });
+                        },
+                        child: Stack(
+                          alignment: Alignment.topRight,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: colors[user - 1],
+                              radius: 24,
+                              child: Text(
+                                user.toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.black,
+                                  size: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    case AvatarType.currentUserNotJoined:
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            this
+                                .task
+                                .subtasks
+                                .firstWhere((subtask) =>
+                                    subtask.name == parentTask.name)
+                                .subtasks
+                                .firstWhere(
+                                    (subtask) => subtask.name == task.name)
+                                .users
+                                .add(user);
+                          });
+                        },
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: colors[user - 1],
+                              radius: 24,
+                              child: Text(
+                                user.toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            Container(
+                              width: 45,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.48),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.add,
+                              color: Color(0xFF8A8A8C),
+                            )
+                          ],
+                        ),
+                      );
+                  }
                 },
               ),
             ),

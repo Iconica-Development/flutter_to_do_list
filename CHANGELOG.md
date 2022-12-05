@@ -1,6 +1,6 @@
 ## 0.0.3
 
-- Added upgraded design
+- Upgraded design
 
 ## 0.0.2
 

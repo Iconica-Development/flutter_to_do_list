@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list/to_do_list.dart';
 
 /// Detail view for [ToDoList]
-class ToDoListDetailDesign1 extends StatefulWidget {
-  const ToDoListDetailDesign1({
+class ToDoListDetail extends StatefulWidget {
+  const ToDoListDetail({
     required this.task,
     this.avatarBuilder,
     this.onCheck,
@@ -34,10 +34,10 @@ class ToDoListDetailDesign1 extends StatefulWidget {
       AvatarType avatarType, Task parentTask, Task task)? avatarBuilder;
 
   @override
-  State<ToDoListDetailDesign1> createState() => _ToDoListDetailDesign1State();
+  State<ToDoListDetail> createState() => _ToDoListDetailDesign1State();
 }
 
-class _ToDoListDetailDesign1State extends State<ToDoListDetailDesign1> {
+class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
   Task? selectedTask;
 
   @override

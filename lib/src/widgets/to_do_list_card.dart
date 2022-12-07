@@ -46,64 +46,63 @@ class ToDoListCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: width / 2.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Text(
+      child: SizedBox(
+        width: width / 2.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  Text(
                     task.name,
                     style: textStyleHead,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                for (var subtask in task.subtasks) ...[
-                  Row(
-                    children: [
-                      Icon(
-                        subtask.percentageDone == 100
-                            ? Icons.check_box_outlined
-                            : Icons.check_box_outline_blank,
-                        color: theme?.checkboxColor ??
-                            Theme.of(context).primaryColor,
-                      ),
-                      Container(
-                        width: width / 3.5,
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Text(
-                          subtask.name,
-                          style: textStyle,
-                          overflow: TextOverflow.ellipsis,
+                  const Spacer(),
+                  if (task.subtasks.isNotEmpty)
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          value: task.percentageDone / 100,
+                          strokeWidth: 3,
+                          color: theme?.percentageIndicatorBackground,
                         ),
-                      ),
-                    ],
+                        Text(
+                          '${task.percentageDone.round()}%',
+                          style: percentageText,
+                        )
+                      ],
+                    ),
+                ],
+              ),
+            ),
+            for (var subtask in task.subtasks) ...[
+              Row(
+                children: [
+                  Icon(
+                    subtask.percentageDone == 100
+                        ? Icons.check_box_outlined
+                        : Icons.check_box_outline_blank,
+                    color:
+                        theme?.checkboxColor ?? Theme.of(context).primaryColor,
+                  ),
+                  Container(
+                    width: width / 2.5,
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      subtask.name,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
-              ],
-            ),
-          ),
-          if (task.subtasks.isNotEmpty)
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CircularProgressIndicator(
-                  value: task.percentageDone / 100,
-                  strokeWidth: 3,
-                  color: theme?.percentageIndicatorBackground,
-                ),
-                Text(
-                  '${task.percentageDone.round()}%',
-                  style: percentageText,
-                )
-              ],
-            ),
-        ],
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

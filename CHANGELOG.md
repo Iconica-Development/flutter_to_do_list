@@ -1,5 +1,9 @@
 ## 0.0.3
 
+- Update task card so the subtask name is shown longer
+
+## 0.0.3
+
 - Upgraded design
 
 ## 0.0.2

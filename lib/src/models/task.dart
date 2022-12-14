@@ -19,7 +19,11 @@ class Task {
   /// Counts the deepest nested tasks of all the subtasks.
   double get percentageDone {
     var pair = _getOpenTasks(subtasks, _TaskTuple());
-    return 100 - ((pair.open / pair.total) * 100);
+    var pairPercentage = (pair.open / pair.total) * 100;
+    if (pairPercentage.isNaN) {
+      pairPercentage = 0;
+    }
+    return 100 - pairPercentage;
   }
 
   /// Amount of subtasks which are not completed yet.

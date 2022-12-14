@@ -19,7 +19,7 @@ class ToDoListExampleApp extends StatefulWidget {
 class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
   var tasks = [
     Task(
-      name: 'Vandaag',
+      name: 'Household Tasks',
       subtasks: [
         Task(
           name: 'Cleaning',
@@ -51,54 +51,23 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
       ],
     ),
     Task(
-      name: 'Morgen',
+      name: 'Appointments',
       subtasks: [
         Task(
-          name: 'Cleaning',
-          subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen', users: [2]),
-            Task(name: 'Clean bathroom', users: [2]),
-            Task(name: 'Clean bedroom', users: []),
-          ],
+          name: 'Dentist',
+          isDone: true,
         ),
         Task(
-          name: 'Cooking',
-          subtasks: [
-            Task(name: 'Boiling eggs', users: [3]),
-            Task(name: 'Baking pancakes', users: [2], isDone: true),
-            Task(name: 'Making drinks', users: [2, 3], isDone: true),
-          ],
+          name: 'Hairdresser',
         ),
       ],
     ),
     Task(
-      name: 'Overmorgen',
+      name: 'Repeating tasks',
       subtasks: [
         Task(
-          name: 'Washing',
-          subtasks: [
-            Task(name: 'Washing clothes', users: [3, 2], isDone: true),
-            Task(name: 'Washing towels', users: [3]),
-            Task(name: 'Washing bedsheets', users: [3], isDone: true),
-          ],
-        ),
-        Task(
-          name: 'Cleaning',
-          subtasks: [
-            Task(name: 'Clean living room', users: [2, 1]),
-            Task(name: 'Clean kitchen', users: []),
-            Task(name: 'Clean bathroom', users: [2], isDone: true),
-            Task(name: 'Clean bedroom', users: []),
-          ],
-        ),
-        Task(
-          name: 'Cooking',
-          subtasks: [
-            Task(name: 'Boiling eggs', users: [1], isDone: true),
-            Task(name: 'Baking pancakes', users: [1], isDone: true),
-            Task(name: 'Making drinks', users: [3], isDone: true),
-          ],
+          name: 'Take meds',
+          isDone: true,
         ),
       ],
     ),

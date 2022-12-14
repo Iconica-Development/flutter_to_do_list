@@ -83,7 +83,7 @@ class ToDoListCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    subtask.percentageDone == 100
+                    subtask.percentageDone == 100.0
                         ? Icons.check_box_outlined
                         : Icons.check_box_outline_blank,
                     color:

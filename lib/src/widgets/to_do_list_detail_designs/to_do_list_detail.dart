@@ -47,172 +47,174 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
     var bodyStyle = widget.theme?.bodyStyle ??
         Theme.of(context).textTheme.bodyText1 ??
         const TextStyle();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Row(
-            children: [
-              Text(widget.task.name, style: headingStyle),
-              widget.theme?.pageHeader ?? Container(),
-            ],
-          ),
-        ),
-        for (var subtask in widget.task.subtasks) ...[
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Padding(
-            padding: const EdgeInsets.only(
-              bottom: 20,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                if (selectedTask != subtask) {
-                  setState(() {
-                    selectedTask = subtask;
-                  });
-                } else {
-                  setState(() {
-                    selectedTask = null;
-                  });
-                }
-              },
-              child: Container(
-                decoration: widget.theme?.subtaskBoxDecoration,
-                padding: widget.theme?.subtaskPadding,
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          subtask.name,
-                          style: bodyStyle,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 2.8,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: LinearProgressIndicator(
-                                  minHeight: 7,
-                                  value: subtask.percentageDone / 100,
-                                  backgroundColor: widget
-                                      .theme?.percentageIndicatorBackground,
-                                  color: widget
-                                      .theme?.percentageIndicatorForeground,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                '${subtask.percentageDone.round()}%'
-                                    .padRight(4, '  '),
-                                style: bodyStyle.copyWith(fontSize: 12),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    Transform.rotate(
-                      angle: (selectedTask != null && selectedTask == subtask)
-                          ? -pi / 2
-                          : pi,
-                      child: Icon(
-                        Icons.chevron_left,
-                        color: bodyStyle.color,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Row(
+              children: [
+                Text(widget.task.name, style: headingStyle),
+                widget.theme?.pageHeader ?? Container(),
+              ],
             ),
           ),
-          if (selectedTask != null && selectedTask == subtask) ...[
-            for (var i = 0; i < selectedTask!.subtasks.length; i++) ...[
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0, right: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      selectedTask!.subtasks[i].name,
-                      overflow: TextOverflow.ellipsis,
-                      style: bodyStyle,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (widget.avatarBuilder != null &&
-                        selectedTask!.subtasks[i].users.isNotEmpty) ...[
-                      Stack(
+          for (var subtask in widget.task.subtasks) ...[
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 20,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  if (selectedTask != subtask) {
+                    setState(() {
+                      selectedTask = subtask;
+                    });
+                  } else {
+                    setState(() {
+                      selectedTask = null;
+                    });
+                  }
+                },
+                child: Container(
+                  decoration: widget.theme?.subtaskBoxDecoration,
+                  padding: widget.theme?.subtaskPadding,
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          for (var j = 0;
-                              j < selectedTask!.subtasks[i].users.length;
-                              j++) ...[
-                            if (!(widget.sameUser?.call(
-                                    selectedTask!.subtasks[i].users[j],
-                                    widget.user) ??
-                                false))
-                              Container(
-                                margin: EdgeInsets.only(left: j * 24),
-                                child: widget.avatarBuilder!.call(
-                                  context,
-                                  selectedTask!.subtasks[i].users[j],
-                                  AvatarType.user,
-                                  selectedTask!,
-                                  selectedTask!.subtasks[i],
+                          Text(
+                            subtask.name,
+                            style: bodyStyle,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.8,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: LinearProgressIndicator(
+                                    minHeight: 7,
+                                    value: subtask.percentageDone / 100,
+                                    backgroundColor: widget
+                                        .theme?.percentageIndicatorBackground,
+                                    color: widget
+                                        .theme?.percentageIndicatorForeground,
+                                  ),
                                 ),
                               ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  '${subtask.percentageDone.round()}%'
+                                      .padRight(4, '  '),
+                                  style: bodyStyle.copyWith(fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                    ],
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (widget.sameUser != null)
-                      Container(
-                        child: widget.avatarBuilder!.call(
-                          context,
-                          widget.user,
-                          doesListContainUser(
-                                  selectedTask!.subtasks[i].users, widget.user)
-                              ? AvatarType.currentUserJoined
-                              : AvatarType.currentUserNotJoined,
-                          selectedTask!,
-                          selectedTask!.subtasks[i],
+                      const Spacer(),
+                      Transform.rotate(
+                        angle: (selectedTask != null && selectedTask == subtask)
+                            ? -pi / 2
+                            : pi,
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: bodyStyle.color,
                         ),
                       ),
-                    const Spacer(),
-                    Checkbox(
-                      checkColor: widget.theme?.checkBoxCheckColor,
-                      fillColor: MaterialStateProperty.all(
-                          widget.theme?.checkBoxBgColor),
-                      overlayColor: MaterialStateProperty.all(
-                          widget.theme?.checkBoxSplashColor),
-                      value: selectedTask!.subtasks[i].isDone,
-                      onChanged: (value) => widget.onCheck?.call(
-                          subtask, selectedTask!.subtasks[i], value ?? false),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              if (selectedTask!.subtasks.length - 1 != i)
-                const Divider(
-                  color: Color(0xFF979797),
-                ),
-            ],
-            const SizedBox(
-              height: 40,
             ),
+            if (selectedTask != null && selectedTask == subtask) ...[
+              for (var i = 0; i < selectedTask!.subtasks.length; i++) ...[
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0, right: 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        selectedTask!.subtasks[i].name,
+                        overflow: TextOverflow.ellipsis,
+                        style: bodyStyle,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      if (widget.avatarBuilder != null &&
+                          selectedTask!.subtasks[i].users.isNotEmpty) ...[
+                        Stack(
+                          children: [
+                            for (var j = 0;
+                                j < selectedTask!.subtasks[i].users.length;
+                                j++) ...[
+                              if (!(widget.sameUser?.call(
+                                      selectedTask!.subtasks[i].users[j],
+                                      widget.user) ??
+                                  false))
+                                Container(
+                                  margin: EdgeInsets.only(left: j * 24),
+                                  child: widget.avatarBuilder!.call(
+                                    context,
+                                    selectedTask!.subtasks[i].users[j],
+                                    AvatarType.user,
+                                    selectedTask!,
+                                    selectedTask!.subtasks[i],
+                                  ),
+                                ),
+                            ],
+                          ],
+                        ),
+                      ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      if (widget.sameUser != null)
+                        Container(
+                          child: widget.avatarBuilder!.call(
+                            context,
+                            widget.user,
+                            doesListContainUser(selectedTask!.subtasks[i].users,
+                                    widget.user)
+                                ? AvatarType.currentUserJoined
+                                : AvatarType.currentUserNotJoined,
+                            selectedTask!,
+                            selectedTask!.subtasks[i],
+                          ),
+                        ),
+                      const Spacer(),
+                      Checkbox(
+                        checkColor: widget.theme?.checkBoxCheckColor,
+                        fillColor: MaterialStateProperty.all(
+                            widget.theme?.checkBoxBgColor),
+                        overlayColor: MaterialStateProperty.all(
+                            widget.theme?.checkBoxSplashColor),
+                        value: selectedTask!.subtasks[i].isDone,
+                        onChanged: (value) => widget.onCheck?.call(
+                            subtask, selectedTask!.subtasks[i], value ?? false),
+                      ),
+                    ],
+                  ),
+                ),
+                if (selectedTask!.subtasks.length - 1 != i)
+                  const Divider(
+                    color: Color(0xFF979797),
+                  ),
+              ],
+              const SizedBox(
+                height: 40,
+              ),
+            ],
           ],
         ],
-      ],
+      ),
     );
   }
 

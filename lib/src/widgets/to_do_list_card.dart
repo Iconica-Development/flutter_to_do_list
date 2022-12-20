@@ -9,23 +9,34 @@ class ToDoListCardTheme {
   ToDoListCardTheme({
     this.headingStyle,
     this.bodyStyle,
-    this.checkboxColor,
     this.percentageIndicatorBackground,
     this.percentageIndicatorText,
-    this.cardColor,
+    this.cardDecoration,
+    this.circularIndicatorStrokeWidth,
+    this.subTaskDonePrefix,
+    this.subTaskUndonePrefix,
+    this.subTaskSpacing,
+    this.indicatorSize,
   });
   TextStyle? headingStyle;
   TextStyle? bodyStyle;
-  Color? checkboxColor;
   Color? percentageIndicatorBackground;
   TextStyle? percentageIndicatorText;
-  Color? cardColor;
+  BoxDecoration? cardDecoration;
+  double? circularIndicatorStrokeWidth;
+  Widget? subTaskDonePrefix;
+  Widget? subTaskUndonePrefix;
+  double? subTaskSpacing;
+  double? indicatorSize;
 }
 
 /// Card shown in carousel of [ToDoList]
 class ToDoListCard extends StatelessWidget {
-  const ToDoListCard({required this.task, this.theme, Key? key})
-      : super(key: key);
+  const ToDoListCard({
+    required this.task,
+    this.theme,
+    Key? key,
+  }) : super(key: key);
 
   final Task task;
   final ToDoListCardTheme? theme;
@@ -38,69 +49,82 @@ class ToDoListCard extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var percentageText =
         theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyText1;
+
+    task.subtasks.sort((a, b) => a.percentageDone.compareTo(b.percentageDone));
+
     return Container(
       width: width / 1.8,
       height: 280,
-      decoration: BoxDecoration(
-        color: theme?.cardColor ?? Color(task.hashCode).withAlpha(255),
-        borderRadius: BorderRadius.circular(15),
-      ),
+      decoration: theme?.cardDecoration ??
+          BoxDecoration(
+            color: Color(task.hashCode).withAlpha(255),
+            borderRadius: BorderRadius.circular(15),
+          ),
       padding: const EdgeInsets.all(15),
       child: SizedBox(
         width: width / 2.8,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                children: [
-                  Text(
-                    task.name,
-                    style: textStyleHead,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  if (task.subtasks.isNotEmpty)
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircularProgressIndicator(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  task.name,
+                  style: textStyleHead,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const Spacer(),
+                if (task.subtasks.isNotEmpty)
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: theme?.indicatorSize ?? 40,
+                        height: theme?.indicatorSize ?? 40,
+                        child: CircularProgressIndicator(
                           value: task.percentageDone / 100,
-                          strokeWidth: 3,
+                          strokeWidth: theme?.circularIndicatorStrokeWidth ?? 3,
                           color: theme?.percentageIndicatorBackground,
                         ),
-                        Text(
-                          '${task.percentageDone.round()}%',
-                          style: percentageText,
-                        )
+                      ),
+                      Text(
+                        '${task.percentageDone.round()}%',
+                        style: percentageText,
+                      )
+                    ],
+                  ),
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  for (var subtask in task.subtasks) ...[
+                    Row(
+                      children: [
+                        subtask.percentageDone == 100.0
+                            ? theme?.subTaskDonePrefix ??
+                                const Icon(Icons.check_box_outlined)
+                            : theme?.subTaskUndonePrefix ??
+                                const Icon(Icons.check_box_outline_blank),
+                        Container(
+                          width: width / 2.5,
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(
+                            subtask.name,
+                            style: textStyle,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     ),
+                    SizedBox(
+                      height: theme?.subTaskSpacing ?? 5,
+                    )
+                  ],
                 ],
               ),
             ),
-            for (var subtask in task.subtasks) ...[
-              Row(
-                children: [
-                  Icon(
-                    subtask.percentageDone == 100.0
-                        ? Icons.check_box_outlined
-                        : Icons.check_box_outline_blank,
-                    color:
-                        theme?.checkboxColor ?? Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    width: width / 2.5,
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Text(
-                      subtask.name,
-                      style: textStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ],
           ],
         ),
       ),

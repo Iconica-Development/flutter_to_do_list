@@ -1,4 +1,8 @@
-## 0.0.3
+## 0.0.7
+
+- Added multiple paramters to the ToDoListCardTheme for more visual options
+
+## 0.0.4
 
 - Update task card so the subtask name is shown longer
 

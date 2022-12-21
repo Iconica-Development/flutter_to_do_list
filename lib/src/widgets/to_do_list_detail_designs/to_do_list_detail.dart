@@ -47,6 +47,7 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
     var bodyStyle = widget.theme?.bodyStyle ??
         Theme.of(context).textTheme.bodyText1 ??
         const TextStyle();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,38 +141,70 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                   padding: const EdgeInsets.only(left: 18.0, right: 5),
                   child: Row(
                     children: [
-                      Text(
-                        selectedTask!.subtasks[i].name,
-                        overflow: TextOverflow.ellipsis,
-                        style: bodyStyle,
+                      Expanded(
+                        child: Text(
+                          selectedTask!.subtasks[i].name,
+                          overflow: TextOverflow.ellipsis,
+                          style: bodyStyle,
+                        ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       if (widget.avatarBuilder != null &&
                           selectedTask!.subtasks[i].users.isNotEmpty) ...[
-                        Stack(
-                          children: [
-                            for (var j = 0;
-                                j < selectedTask!.subtasks[i].users.length;
-                                j++) ...[
-                              if (!(widget.sameUser?.call(
-                                      selectedTask!.subtasks[i].users[j],
-                                      widget.user) ??
-                                  false))
-                                Container(
-                                  margin: EdgeInsets.only(left: j * 24),
-                                  child: widget.avatarBuilder!.call(
-                                    context,
-                                    selectedTask!.subtasks[i].users[j],
-                                    AvatarType.user,
-                                    selectedTask!,
-                                    selectedTask!.subtasks[i],
-                                  ),
+                        if (getUsersWithoutCurrentUser(
+                                    selectedTask!.subtasks[i].users,
+                                    widget.user)
+                                .length >
+                            3) ...[
+                          Row(
+                            children: [
+                              Container(
+                                child: widget.avatarBuilder!.call(
+                                  context,
+                                  getUsersWithoutCurrentUser(
+                                      selectedTask!.subtasks[i].users,
+                                      widget.user)[0],
+                                  AvatarType.user,
+                                  selectedTask!,
+                                  selectedTask!.subtasks[i],
                                 ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '+${getUsersWithoutCurrentUser(selectedTask!.subtasks[i].users, widget.user).length - 1}',
+                                style: widget.theme?.avatarPlusStyle ??
+                                    Theme.of(context).textTheme.bodyText1,
+                              )
                             ],
-                          ],
-                        ),
+                          )
+                        ] else ...[
+                          Stack(
+                            children: [
+                              for (var j = 0;
+                                  j < selectedTask!.subtasks[i].users.length;
+                                  j++) ...[
+                                if (!(widget.sameUser?.call(
+                                        selectedTask!.subtasks[i].users[j],
+                                        widget.user) ??
+                                    false))
+                                  Container(
+                                    margin: EdgeInsets.only(left: j * 25),
+                                    child: widget.avatarBuilder!.call(
+                                      context,
+                                      selectedTask!.subtasks[i].users[j],
+                                      AvatarType.user,
+                                      selectedTask!,
+                                      selectedTask!.subtasks[i],
+                                    ),
+                                  ),
+                              ],
+                            ],
+                          ),
+                        ],
                       ],
                       const SizedBox(
                         width: 10,
@@ -189,7 +222,6 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                             selectedTask!.subtasks[i],
                           ),
                         ),
-                      const Spacer(),
                       Checkbox(
                         checkColor: widget.theme?.checkBoxCheckColor,
                         fillColor: MaterialStateProperty.all(
@@ -227,5 +259,18 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
     }
 
     return containsUser;
+  }
+
+  List<dynamic> getUsersWithoutCurrentUser(
+      List<dynamic> users, dynamic currentUSer) {
+    var filteredUsers = [];
+
+    for (var user in users) {
+      if (!(widget.sameUser?.call(currentUSer, user) ?? false)) {
+        filteredUsers.add(user);
+      }
+    }
+
+    return filteredUsers;
   }
 }

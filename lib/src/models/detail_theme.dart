@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ToDoListDetailTheme {
   TextStyle? bodyStyle;
   TextStyle? headingStyle;
+  TextStyle? avatarPlusStyle;
   Color? percentageIndicatorBackground;
   Color? percentageIndicatorForeground;
   Color? checkBoxBgColor;
@@ -15,6 +16,7 @@ class ToDoListDetailTheme {
   ToDoListDetailTheme({
     this.bodyStyle,
     this.headingStyle,
+    this.avatarPlusStyle,
     this.percentageIndicatorBackground,
     this.percentageIndicatorForeground,
     this.checkBoxBgColor,

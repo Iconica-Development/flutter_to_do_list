@@ -9,7 +9,8 @@ class ToDoListCardTheme {
   ToDoListCardTheme({
     this.headingStyle,
     this.bodyStyle,
-    this.percentageIndicatorBackground,
+    this.percentageIndicatorColor,
+    this.percentageIndicatorBackgroundColor,
     this.percentageIndicatorText,
     this.cardDecoration,
     this.circularIndicatorStrokeWidth,
@@ -18,9 +19,11 @@ class ToDoListCardTheme {
     this.subTaskSpacing,
     this.indicatorSize,
   });
+
   TextStyle? headingStyle;
   TextStyle? bodyStyle;
-  Color? percentageIndicatorBackground;
+  Color? percentageIndicatorBackgroundColor;
+  Color? percentageIndicatorColor;
   TextStyle? percentageIndicatorText;
   BoxDecoration? cardDecoration;
   double? circularIndicatorStrokeWidth;
@@ -50,7 +53,9 @@ class ToDoListCard extends StatelessWidget {
     var percentageText =
         theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyText1;
 
-    task.subtasks.sort((a, b) => a.percentageDone.compareTo(b.percentageDone));
+    task.subtasks.sort(
+      (a, b) => a.percentageDone.compareTo(b.percentageDone),
+    );
 
     return Container(
       width: width / 1.8,
@@ -85,7 +90,9 @@ class ToDoListCard extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: task.percentageDone / 100,
                           strokeWidth: theme?.circularIndicatorStrokeWidth ?? 3,
-                          color: theme?.percentageIndicatorBackground,
+                          color: theme?.percentageIndicatorColor,
+                          backgroundColor:
+                              theme?.percentageIndicatorBackgroundColor,
                         ),
                       ),
                       Text(
@@ -109,7 +116,9 @@ class ToDoListCard extends StatelessWidget {
                                 const Icon(Icons.check_box_outline_blank),
                         Container(
                           width: width / 2.5,
-                          padding: const EdgeInsets.only(left: 5),
+                          padding: const EdgeInsets.only(
+                            left: 5,
+                          ),
                           child: Text(
                             subtask.name,
                             style: textStyle,

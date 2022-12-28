@@ -9,7 +9,8 @@ class ToDoListCardTheme {
   ToDoListCardTheme({
     this.headingStyle,
     this.bodyStyle,
-    this.percentageIndicatorBackground,
+    this.percentageIndicatorColor,
+    this.percentageIndicatorBackgroundColor,
     this.percentageIndicatorText,
     this.cardDecoration,
     this.circularIndicatorStrokeWidth,
@@ -18,9 +19,11 @@ class ToDoListCardTheme {
     this.subTaskSpacing,
     this.indicatorSize,
   });
+
   TextStyle? headingStyle;
   TextStyle? bodyStyle;
-  Color? percentageIndicatorBackground;
+  Color? percentageIndicatorBackgroundColor;
+  Color? percentageIndicatorColor;
   TextStyle? percentageIndicatorText;
   BoxDecoration? cardDecoration;
   double? circularIndicatorStrokeWidth;
@@ -85,7 +88,8 @@ class ToDoListCard extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: task.percentageDone / 100,
                           strokeWidth: theme?.circularIndicatorStrokeWidth ?? 3,
-                          color: theme?.percentageIndicatorBackground,
+                          color: theme?.percentageIndicatorColor,
+                          backgroundColor: theme?.percentageIndicatorBackgroundColor,  
                         ),
                       ),
                       Text(

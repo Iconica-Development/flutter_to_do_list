@@ -53,7 +53,9 @@ class ToDoListCard extends StatelessWidget {
     var percentageText =
         theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyText1;
 
-    task.subtasks.sort((a, b) => a.percentageDone.compareTo(b.percentageDone));
+    task.subtasks.sort(
+      (a, b) => a.percentageDone.compareTo(b.percentageDone),
+    );
 
     return Container(
       width: width / 1.8,
@@ -89,7 +91,8 @@ class ToDoListCard extends StatelessWidget {
                           value: task.percentageDone / 100,
                           strokeWidth: theme?.circularIndicatorStrokeWidth ?? 3,
                           color: theme?.percentageIndicatorColor,
-                          backgroundColor: theme?.percentageIndicatorBackgroundColor,  
+                          backgroundColor:
+                              theme?.percentageIndicatorBackgroundColor,
                         ),
                       ),
                       Text(
@@ -113,7 +116,9 @@ class ToDoListCard extends StatelessWidget {
                                 const Icon(Icons.check_box_outline_blank),
                         Container(
                           width: width / 2.5,
-                          padding: const EdgeInsets.only(left: 5),
+                          padding: const EdgeInsets.only(
+                            left: 5,
+                          ),
                           child: Text(
                             subtask.name,
                             style: textStyle,

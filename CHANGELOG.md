@@ -1,3 +1,7 @@
+## 0.1.0
+
+- Updated the carousel to use infinite sliding in both directions
+
 ## 0.0.8
 
 - Changed up the list subtask so that when to there are more then 3 avatars they get summed up

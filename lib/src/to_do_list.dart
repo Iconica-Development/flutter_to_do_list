@@ -14,8 +14,10 @@ class ToDoList extends StatelessWidget {
     required this.tasks,
     this.cardTheme,
     this.onCardClick,
-    Key? key,
-  }) : super(key: key);
+    this.initialPage = 0,
+    this.allowInfiniteScrollingBackwards = false,
+    super.key,
+  });
 
   final List<Task> tasks;
   final ToDoListCardTheme? cardTheme;
@@ -24,11 +26,19 @@ class ToDoList extends StatelessWidget {
   /// Can be used to navigate to [ToDoListDetail]
   final void Function(int index)? onCardClick;
 
+  /// The page to show when first creating the [Carousel].
+  final int initialPage;
+
+  /// Whether to allow infinite scrolling backwards. Defaults to false. If true, this works by using a very large number of pages (10000). Works in conjunction with [initialPage].
+  final bool allowInfiniteScrollingBackwards;
+
   @override
   Widget build(BuildContext context) {
     return Carousel(
       selectableCardId: 3,
       onCardClick: onCardClick,
+      initialPage: initialPage,
+      allowInfiniteScrollingBackwards: allowInfiniteScrollingBackwards,
       transforms: [
         CardTransform(
           x: 200,

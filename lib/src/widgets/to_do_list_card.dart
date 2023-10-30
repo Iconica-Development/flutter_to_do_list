@@ -47,11 +47,11 @@ class ToDoListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textStyleHead =
-        theme?.headingStyle ?? Theme.of(context).textTheme.headline6;
-    var textStyle = theme?.bodyStyle ?? Theme.of(context).textTheme.bodyText1;
+        theme?.headingStyle ?? Theme.of(context).textTheme.titleLarge;
+    var textStyle = theme?.bodyStyle ?? Theme.of(context).textTheme.bodyLarge;
     var width = MediaQuery.of(context).size.width;
     var percentageText =
-        theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyText1;
+        theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyLarge;
 
     task.subtasks.sort(
       (a, b) => a.percentageDone.compareTo(b.percentageDone),

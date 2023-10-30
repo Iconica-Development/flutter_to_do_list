@@ -43,9 +43,9 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
   @override
   Widget build(BuildContext context) {
     var headingStyle =
-        widget.theme?.headingStyle ?? Theme.of(context).textTheme.headline6;
+        widget.theme?.headingStyle ?? Theme.of(context).textTheme.titleLarge;
     var bodyStyle = widget.theme?.bodyStyle ??
-        Theme.of(context).textTheme.bodyText1 ??
+        Theme.of(context).textTheme.bodyLarge ??
         const TextStyle();
 
     return SingleChildScrollView(
@@ -177,7 +177,7 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                               Text(
                                 '+${getUsersWithoutCurrentUser(selectedTask!.subtasks[i].users, widget.user).length - 1}',
                                 style: widget.theme?.avatarPlusStyle ??
-                                    Theme.of(context).textTheme.bodyText1,
+                                    Theme.of(context).textTheme.bodyLarge,
                               )
                             ],
                           )

@@ -104,7 +104,7 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
 
   @override
   Widget build(BuildContext context) {
-    var titleStyle = Theme.of(context).textTheme.headline6!;
+    var titleStyle = Theme.of(context).textTheme.titleLarge!;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -132,7 +132,7 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
                   bodyStyle: titleStyle.copyWith(color: Colors.white),
                   headingStyle: titleStyle.copyWith(color: Colors.white),
                   percentageIndicatorText:
-                      Theme.of(context).textTheme.bodyText1!.copyWith(
+                      Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Colors.white,
                             fontSize: 11,
                           ),

@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Added empty builders for when no subtasks are present.
+
 ## 0.1.0
 
 - Updated the carousel to use infinite sliding in both directions

@@ -18,6 +18,8 @@ class ToDoListCardTheme {
     this.subTaskUndonePrefix,
     this.subTaskSpacing,
     this.indicatorSize,
+    this.emptyTaskBuilder,
+    this.emptyTaskPercentageBuilder,
   });
 
   TextStyle? headingStyle;
@@ -31,6 +33,8 @@ class ToDoListCardTheme {
   Widget? subTaskUndonePrefix;
   double? subTaskSpacing;
   double? indicatorSize;
+  Widget Function(Task task)? emptyTaskBuilder;
+  Widget Function(Task task)? emptyTaskPercentageBuilder;
 }
 
 /// Card shown in carousel of [ToDoList]
@@ -80,7 +84,7 @@ class ToDoListCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const Spacer(),
-                if (task.subtasks.isNotEmpty)
+                if (task.subtasks.isNotEmpty) ...[
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -101,38 +105,45 @@ class ToDoListCard extends StatelessWidget {
                       )
                     ],
                   ),
+                ] else ...[
+                  theme?.emptyTaskPercentageBuilder?.call(task) ??
+                      const SizedBox.shrink(),
+                ],
               ],
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  for (var subtask in task.subtasks) ...[
-                    Row(
+              child: task.subtasks.isNotEmpty
+                  ? ListView(
                       children: [
-                        subtask.percentageDone == 100.0
-                            ? theme?.subTaskDonePrefix ??
-                                const Icon(Icons.check_box_outlined)
-                            : theme?.subTaskUndonePrefix ??
-                                const Icon(Icons.check_box_outline_blank),
-                        Container(
-                          width: width / 2.5,
-                          padding: const EdgeInsets.only(
-                            left: 5,
+                        for (var subtask in task.subtasks) ...[
+                          Row(
+                            children: [
+                              subtask.percentageDone == 100.0
+                                  ? theme?.subTaskDonePrefix ??
+                                      const Icon(Icons.check_box_outlined)
+                                  : theme?.subTaskUndonePrefix ??
+                                      const Icon(Icons.check_box_outline_blank),
+                              Container(
+                                width: width / 2.5,
+                                padding: const EdgeInsets.only(
+                                  left: 5,
+                                ),
+                                child: Text(
+                                  subtask.name,
+                                  style: textStyle,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Text(
-                            subtask.name,
-                            style: textStyle,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                          SizedBox(
+                            height: theme?.subTaskSpacing ?? 5,
+                          )
+                        ],
                       ],
-                    ),
-                    SizedBox(
-                      height: theme?.subTaskSpacing ?? 5,
                     )
-                  ],
-                ],
-              ),
+                  : theme?.emptyTaskBuilder?.call(task) ??
+                      const SizedBox.shrink(),
             ),
           ],
         ),

@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:to_do_list/to_do_list.dart';
 
@@ -20,8 +22,9 @@ class ToDoListCardTheme {
     this.indicatorSize,
     this.emptyTaskBuilder,
     this.emptyTaskPercentageBuilder,
+    this.seeMoreText,
   });
-
+  TextStyle? seeMoreText;
   TextStyle? headingStyle;
   TextStyle? bodyStyle;
   Color? percentageIndicatorBackgroundColor;
@@ -57,9 +60,19 @@ class ToDoListCard extends StatelessWidget {
     var percentageText =
         theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyLarge;
 
+    var seeMoreText = theme?.seeMoreText ??
+        Theme.of(context).textTheme.bodyMedium?.copyWith(
+              decoration: TextDecoration.underline,
+            );
+
     task.subtasks.sort(
       (a, b) => a.percentageDone.compareTo(b.percentageDone),
     );
+
+    var amountOfCards = amountOfCardsInView();
+    var subtasksToDisplay = amountOfCards < task.subtasks.length
+        ? amountOfCards
+        : task.subtasks.length;
 
     return Container(
       width: width / 1.8,
@@ -115,10 +128,12 @@ class ToDoListCard extends StatelessWidget {
               child: task.subtasks.isNotEmpty
                   ? ListView(
                       children: [
-                        for (var subtask in task.subtasks) ...[
+                        for (var subtask = 0;
+                            subtask < subtasksToDisplay;
+                            subtask++) ...[
                           Row(
                             children: [
-                              subtask.percentageDone == 100.0
+                              task.subtasks[subtask].percentageDone == 100.0
                                   ? theme?.subTaskDonePrefix ??
                                       const Icon(Icons.check_box_outlined)
                                   : theme?.subTaskUndonePrefix ??
@@ -129,7 +144,7 @@ class ToDoListCard extends StatelessWidget {
                                   left: 5,
                                 ),
                                 child: Text(
-                                  subtask.name,
+                                  task.subtasks[subtask].name,
                                   style: textStyle,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -145,9 +160,45 @@ class ToDoListCard extends StatelessWidget {
                   : theme?.emptyTaskBuilder?.call(task) ??
                       const SizedBox.shrink(),
             ),
+            if (task.subtasks.length > subtasksToDisplay)
+              Text(
+                "Click to see ${task.subtasks.length - amountOfCards} more",
+                style: seeMoreText,
+              )
           ],
         ),
       ),
     );
+  }
+
+  double calculateRowHeight() {
+    // Assume default values if theme styles are null
+    double taskNameHeight =
+        theme?.headingStyle?.fontSize ?? 18.0; // Default font size
+    double textStyleHeight =
+        theme?.bodyStyle?.fontSize ?? 16.0; // Default font size
+    double padding = 8.0; // Padding between rows
+    return max(taskNameHeight, textStyleHeight) + padding;
+  }
+
+  int amountOfCardsInView() {
+    double totalCardHeight = 280.0; // Total height of the card
+    double taskNameHeight =
+        theme?.headingStyle?.fontSize ?? 18.0; // Default font size
+    double progressIndicatorHeight =
+        theme?.indicatorSize ?? 40.0; // Default progress indicator size
+    double clickToSeeMoreTextHeight =
+        theme?.bodyStyle?.fontSize ?? 16.0; // Default font size
+    double spacing =
+        10.0; // Spacing around progress indicator and 'Click to see more' text
+    // Calculate the height available for subtasks
+    double availableHeight = totalCardHeight -
+        taskNameHeight -
+        progressIndicatorHeight -
+        clickToSeeMoreTextHeight -
+        (2 * spacing);
+    double rowHeight = calculateRowHeight();
+    // Calculate the number of cards that can fit into the available height
+    return (availableHeight / rowHeight).floor();
   }
 }

@@ -92,6 +92,10 @@ class _ToDoListExampleAppState extends State<ToDoListExampleApp> {
         ),
       ],
     ),
+    Task(name: "Teach a goldfish how to breakdance.", subtasks: [
+      Task(name: "Learn how to breakdance"),
+      Task(name: "Learn a goldfish how to breakdance"),
+    ])
   ];
 
   int _getOpenTasks() {

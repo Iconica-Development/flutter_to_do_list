@@ -22,9 +22,11 @@ class ToDoListCardTheme {
     this.indicatorSize,
     this.emptyTaskBuilder,
     this.emptyTaskPercentageBuilder,
-    this.seeMoreText,
+    this.seeMoreTextBuilder,
+    this.seeMoreTextStyle,
   });
-  TextStyle? seeMoreText;
+  String Function(int amount)? seeMoreTextBuilder;
+  TextStyle? seeMoreTextStyle;
   TextStyle? headingStyle;
   TextStyle? bodyStyle;
   Color? percentageIndicatorBackgroundColor;
@@ -60,7 +62,7 @@ class ToDoListCard extends StatelessWidget {
     var percentageText =
         theme?.percentageIndicatorText ?? Theme.of(context).textTheme.bodyLarge;
 
-    var seeMoreText = theme?.seeMoreText ??
+    var seeMoreTextStyle = theme?.seeMoreTextStyle ??
         Theme.of(context).textTheme.bodyMedium?.copyWith(
               decoration: TextDecoration.underline,
             );
@@ -162,8 +164,10 @@ class ToDoListCard extends StatelessWidget {
             ),
             if (task.subtasks.length > subtasksToDisplay)
               Text(
-                "Click to see ${task.subtasks.length - amountOfCards} more",
-                style: seeMoreText,
+                theme?.seeMoreTextBuilder
+                        ?.call(task.subtasks.length - amountOfCards) ??
+                    "Click to see ${task.subtasks.length - amountOfCards} more",
+                style: seeMoreTextStyle,
               )
           ],
         ),

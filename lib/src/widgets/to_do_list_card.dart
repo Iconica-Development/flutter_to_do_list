@@ -181,7 +181,7 @@ class ToDoListCard extends StatelessWidget {
         theme?.headingStyle?.fontSize ?? 18.0; // Default font size
     double textStyleHeight =
         theme?.bodyStyle?.fontSize ?? 16.0; // Default font size
-    double padding = 8.0; // Padding between rows
+    double padding = theme?.subTaskSpacing ?? 5; // Padding between rows
     return max(taskNameHeight, textStyleHeight) + padding;
   }
 
@@ -194,11 +194,10 @@ class ToDoListCard extends StatelessWidget {
     double clickToSeeMoreTextHeight =
         theme?.bodyStyle?.fontSize ?? 16.0; // Default font size
     double spacing =
-        10.0; // Spacing around progress indicator and 'Click to see more' text
+        15.0; // Spacing around progress indicator and 'Click to see more' text
     // Calculate the height available for subtasks
     double availableHeight = totalCardHeight -
-        taskNameHeight -
-        progressIndicatorHeight -
+        max(taskNameHeight, progressIndicatorHeight) -
         clickToSeeMoreTextHeight -
         (2 * spacing);
     double rowHeight = calculateRowHeight();

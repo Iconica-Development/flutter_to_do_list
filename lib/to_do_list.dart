@@ -8,5 +8,5 @@ export 'package:to_do_list/src/to_do_list.dart';
 export 'package:to_do_list/src/models/task.dart';
 export 'package:to_do_list/src/models/detail_theme.dart';
 export 'package:to_do_list/src/widgets/to_do_list_card.dart';
-export 'package:to_do_list/src/widgets/to_do_list_detail_designs/designs.dart';
+export 'package:to_do_list/src/widgets/to_do_list_detail/to_do_list_detail.dart';
 export 'package:to_do_list/src/enums/avatar_types.dart';

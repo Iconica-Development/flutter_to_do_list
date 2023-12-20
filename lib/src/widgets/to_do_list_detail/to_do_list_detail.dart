@@ -39,6 +39,7 @@ class ToDoListDetail extends StatefulWidget {
 
 class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
   Task? selectedTask;
+  static const int maxAmountUsersShown = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +69,13 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  if (selectedTask != subtask) {
-                    setState(() {
+                  setState(() {
+                    if (selectedTask != subtask) {
                       selectedTask = subtask;
-                    });
-                  } else {
-                    setState(() {
+                    } else {
                       selectedTask = null;
-                    });
-                  }
+                    }
+                  });
                 },
                 child: Container(
                   decoration: widget.theme?.subtaskBoxDecoration,
@@ -122,9 +121,7 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                       ),
                       const Spacer(),
                       Transform.rotate(
-                        angle: (selectedTask != null && selectedTask == subtask)
-                            ? -pi / 2
-                            : pi,
+                        angle: (selectedTask == subtask) ? -pi / 2 : pi,
                         child: Icon(
                           Icons.chevron_left,
                           color: bodyStyle.color,
@@ -135,15 +132,15 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                 ),
               ),
             ),
-            if (selectedTask != null && selectedTask == subtask) ...[
-              for (var i = 0; i < selectedTask!.subtasks.length; i++) ...[
+            if (selectedTask == subtask) ...[
+              for (var subSubTask in selectedTask?.subtasks ?? <Task>[]) ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0, right: 5),
                   child: Row(
                     children: [
                       Expanded(
                         child: Text(
-                          selectedTask!.subtasks[i].name,
+                          subSubTask.name,
                           overflow: TextOverflow.ellipsis,
                           style: bodyStyle,
                         ),
@@ -152,30 +149,28 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                         width: 5,
                       ),
                       if (widget.avatarBuilder != null &&
-                          selectedTask!.subtasks[i].users.isNotEmpty) ...[
+                          subSubTask.users.isNotEmpty) ...[
                         if (getUsersWithoutCurrentUser(
-                                    selectedTask!.subtasks[i].users,
-                                    widget.user)
+                                    subSubTask.users, widget.user)
                                 .length >
-                            3) ...[
+                            maxAmountUsersShown) ...[
                           Row(
                             children: [
                               Container(
-                                child: widget.avatarBuilder!.call(
-                                  context,
-                                  getUsersWithoutCurrentUser(
-                                      selectedTask!.subtasks[i].users,
-                                      widget.user)[0],
-                                  AvatarType.user,
-                                  selectedTask!,
-                                  selectedTask!.subtasks[i],
-                                ),
+                                child: widget.avatarBuilder?.call(
+                                    context,
+                                    getUsersWithoutCurrentUser(
+                                            subSubTask.users, widget.user)
+                                        .first,
+                                    AvatarType.user,
+                                    selectedTask!,
+                                    subSubTask),
                               ),
                               const SizedBox(
                                 width: 5,
                               ),
                               Text(
-                                '+${getUsersWithoutCurrentUser(selectedTask!.subtasks[i].users, widget.user).length - 1}',
+                                '+${getUsersWithoutCurrentUser(subSubTask.users, widget.user).length - 1}',
                                 style: widget.theme?.avatarPlusStyle ??
                                     Theme.of(context).textTheme.bodyLarge,
                               )
@@ -184,21 +179,21 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                         ] else ...[
                           Stack(
                             children: [
-                              for (var j = 0;
-                                  j < selectedTask!.subtasks[i].users.length;
-                                  j++) ...[
-                                if (!(widget.sameUser?.call(
-                                        selectedTask!.subtasks[i].users[j],
-                                        widget.user) ??
+                              for (var taskUser in subSubTask.users) ...[
+                                if (!(widget.sameUser
+                                        ?.call(taskUser, widget.user) ??
                                     false))
                                   Container(
-                                    margin: EdgeInsets.only(left: j * 25),
-                                    child: widget.avatarBuilder!.call(
+                                    margin: EdgeInsets.only(
+                                        left:
+                                            subSubTask.users.indexOf(taskUser) *
+                                                25),
+                                    child: widget.avatarBuilder?.call(
                                       context,
-                                      selectedTask!.subtasks[i].users[j],
+                                      taskUser,
                                       AvatarType.user,
                                       selectedTask!,
-                                      selectedTask!.subtasks[i],
+                                      subSubTask,
                                     ),
                                   ),
                               ],
@@ -209,33 +204,33 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
                       const SizedBox(
                         width: 10,
                       ),
-                      if (widget.sameUser != null)
+                      if (widget.sameUser != null) ...[
                         Container(
-                          child: widget.avatarBuilder!.call(
+                          child: widget.avatarBuilder?.call(
                             context,
                             widget.user,
-                            doesListContainUser(selectedTask!.subtasks[i].users,
-                                    widget.user)
+                            doesListContainUser(subSubTask.users, widget.user)
                                 ? AvatarType.currentUserJoined
                                 : AvatarType.currentUserNotJoined,
                             selectedTask!,
-                            selectedTask!.subtasks[i],
+                            subSubTask,
                           ),
                         ),
+                      ],
                       Checkbox(
                         checkColor: widget.theme?.checkBoxCheckColor,
                         fillColor: MaterialStateProperty.all(
                             widget.theme?.checkBoxBgColor),
                         overlayColor: MaterialStateProperty.all(
                             widget.theme?.checkBoxSplashColor),
-                        value: selectedTask!.subtasks[i].isDone,
-                        onChanged: (value) => widget.onCheck?.call(
-                            subtask, selectedTask!.subtasks[i], value ?? false),
+                        value: subSubTask.isDone,
+                        onChanged: (value) => widget.onCheck
+                            ?.call(subtask, subSubTask, value ?? false),
                       ),
                     ],
                   ),
                 ),
-                if (selectedTask!.subtasks.length - 1 != i)
+                if (subSubTask != selectedTask?.subtasks.last)
                   const Divider(
                     color: Color(0xFF979797),
                   ),
@@ -250,11 +245,10 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
     );
   }
 
-  bool doesListContainUser(List<dynamic> users, dynamic user) {
-    bool containsUser = false;
-
-    for (var otherUser in users) {
-      containsUser = widget.sameUser?.call(otherUser, user) ?? false;
+  bool doesListContainUser(List<dynamic> users, dynamic currentUser) {
+    var containsUser = false;
+    for (var user in users) {
+      containsUser = widget.sameUser?.call(user, currentUser) ?? false;
       if (containsUser) break;
     }
 
@@ -262,11 +256,11 @@ class _ToDoListDetailDesign1State extends State<ToDoListDetail> {
   }
 
   List<dynamic> getUsersWithoutCurrentUser(
-      List<dynamic> users, dynamic currentUSer) {
+      List<dynamic> users, dynamic currentUser) {
     var filteredUsers = [];
 
     for (var user in users) {
-      if (!(widget.sameUser?.call(currentUSer, user) ?? false)) {
+      if (!(widget.sameUser?.call(currentUser, user) ?? false)) {
         filteredUsers.add(user);
       }
     }

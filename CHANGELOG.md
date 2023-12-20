@@ -1,3 +1,8 @@
+## 0.2.1
+
+- Cleanup package code
+- Added text that shows when there are more tasks then fit on the list
+
 ## 0.2.0
 
 - Added empty builders for when no subtasks are present.

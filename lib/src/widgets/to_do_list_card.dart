@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/to_do_list.dart';
 
+/// A class representing the theme configuration for ToDoListCard widget.
 class ToDoListCardTheme {
   ToDoListCardTheme({
     this.headingStyle,
@@ -25,21 +26,51 @@ class ToDoListCardTheme {
     this.seeMoreTextBuilder,
     this.seeMoreTextStyle,
   });
-  String Function(int amount)? seeMoreTextBuilder;
-  TextStyle? seeMoreTextStyle;
+
+  /// The text style for headings.
   TextStyle? headingStyle;
+
+  /// The text style for body text.
   TextStyle? bodyStyle;
-  Color? percentageIndicatorBackgroundColor;
+
+  /// The color for percentage indicator.
   Color? percentageIndicatorColor;
+
+  /// The background color for percentage indicator.
+  Color? percentageIndicatorBackgroundColor;
+
+  /// The text style for percentage indicator.
   TextStyle? percentageIndicatorText;
+
+  /// The decoration for the card.
   BoxDecoration? cardDecoration;
+
+  /// The stroke width for circular indicator.
   double? circularIndicatorStrokeWidth;
+
+  /// The prefix widget for done subtasks.
   Widget? subTaskDonePrefix;
+
+  /// The prefix widget for undone subtasks.
   Widget? subTaskUndonePrefix;
+
+  /// The spacing between subtasks.
   double? subTaskSpacing;
+
+  /// The size of the indicator.
   double? indicatorSize;
+
+  /// The builder for empty tasks.
   Widget Function(Task task)? emptyTaskBuilder;
+
+  /// The builder for empty task percentage.
   Widget Function(Task task)? emptyTaskPercentageBuilder;
+
+  /// The builder for 'see more' text.
+  String Function(int amount)? seeMoreTextBuilder;
+
+  /// The text style for 'see more' text.
+  TextStyle? seeMoreTextStyle;
 }
 
 /// Card shown in carousel of [ToDoList]
@@ -50,7 +81,10 @@ class ToDoListCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  /// The task to display.
   final Task task;
+
+  /// The theme for the card.
   final ToDoListCardTheme? theme;
 
   @override
